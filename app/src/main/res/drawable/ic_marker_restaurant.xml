@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 카카오 맵 맛집 마커 아이콘 — 오렌지 핀 -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="32dp"
+    android:height="40dp"
+    android:viewportWidth="32"
+    android:viewportHeight="40">
+    <!-- 핀 몸체 -->
+    <path
+        android:fillColor="#FF6B35"
+        android:pathData="M16,0C9.37,0,4,5.37,4,12C4,20,16,40,16,40C16,40,28,20,28,12C28,5.37,22.63,0,16,0Z" />
+    <!-- 중앙 흰 원 -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M16,8A4,4,0,1,1,12,12A4,4,0,0,1,16,8Z" />
+</vector>

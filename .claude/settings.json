@@ -1,0 +1,24 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=\"${CLAUDE_TOOL_INPUT_FILE_PATH:-}\"; if [[ \"$FILE\" == *\"/backend/\"* ]] && [[ \"$FILE\" == *.kt ]]; then echo \"[Hook] 백엔드 Kotlin 파일 변경 감지: $FILE\"; cd \"/c/Users/User/AndroidStudioProjects/MyFoodLoad\" && ./gradlew :backend:ktlintCheck --quiet 2>&1 | tail -5 && echo \"[Hook] ktlint 검사 완료\"; fi'"
+          }
+        ]
+      },
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash -c 'FILE=\"${CLAUDE_TOOL_INPUT_FILE_PATH:-}\"; if [[ \"$FILE\" == *\"/backend/\"* ]] && [[ \"$FILE\" == *.kt ]]; then cd \"/c/Users/User/AndroidStudioProjects/MyFoodLoad\" && ./gradlew :backend:test --tests \"*Unit*\" --quiet 2>&1 | tail -10 && echo \"[Hook] 백엔드 단위 테스트 완료\"; fi'"
+          }
+        ]
+      }
+    ]
+  }
+}

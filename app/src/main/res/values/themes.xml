@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Theme.MyFoodLoad" parent="android:Theme.Material.Light.NoActionBar" />
+
+    <!-- Phase 10: 스플래시 스크린 테마 (core-splashscreen) -->
+    <style name="Theme.MyFoodLoad.Splash" parent="Theme.SplashScreen">
+        <!-- 스플래시 배경색 -->
+        <item name="windowSplashScreenBackground">@color/splash_background</item>
+        <!-- 스플래시 아이콘 -->
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
+        <!-- 스플래시 이후 적용될 테마 -->
+        <item name="postSplashScreenTheme">@style/Theme.MyFoodLoad</item>
+    </style>
+
+</resources>

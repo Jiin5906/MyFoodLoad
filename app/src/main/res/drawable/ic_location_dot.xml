@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 현재 위치 파란 점 마커 -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="#FF1A73E8" />
+    <stroke
+        android:width="2dp"
+        android:color="#FFFFFFFF" />
+    <size
+        android:width="22dp"
+        android:height="22dp" />
+</shape>

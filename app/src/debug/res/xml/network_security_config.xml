@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Debug 빌드용 네트워크 보안 설정.
+    개발 편의를 위해 HTTP 통신 전체 허용 (Release는 HTTPS만 허용).
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="true" />
+</network-security-config>

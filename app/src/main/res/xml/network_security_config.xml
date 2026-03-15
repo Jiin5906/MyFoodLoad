@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    Release 빌드용 네트워크 보안 설정.
+    HTTPS 통신만 허용. Cleartext(HTTP) 통신 전면 차단.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+</network-security-config>

@@ -1,0 +1,62 @@
+services:
+  postgres:
+    image: postgis/postgis:15-3.4-alpine
+    container_name: myfoodload-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: myfoodload
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - myfoodload_pgdata:/var/lib/postgresql/data
+    # t3.micro 메모리 최적화: PostgreSQL shared_buffers 제한
+    command: >
+      postgres
+      -c shared_buffers=64MB
+      -c effective_cache_size=128MB
+      -c work_mem=4MB
+      -c maintenance_work_mem=32MB
+      -c max_connections=40
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d myfoodload"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    container_name: myfoodload-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: jdbc:postgresql://postgres:5432/myfoodload
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID}
+      GEMINI_API_KEY: ${GEMINI_API_KEY}
+      KAKAO_API_KEY: ${KAKAO_API_KEY}
+      YOUTUBE_DATA_API_KEY: ${YOUTUBE_DATA_API_KEY}
+    expose:
+      - "8080"
+
+  nginx:
+    image: nginx:alpine
+    container_name: myfoodload-nginx
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - /etc/letsencrypt:/etc/letsencrypt:ro
+      - ./nginx/certbot-webroot:/var/www/certbot:ro
+
+volumes:
+  myfoodload_pgdata:
