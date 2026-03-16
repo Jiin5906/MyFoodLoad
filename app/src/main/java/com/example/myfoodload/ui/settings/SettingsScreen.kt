@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -20,9 +21,12 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
@@ -39,15 +43,48 @@ fun SettingsScreen(
     val context = LocalContext.current
     val app = context.applicationContext as MyFoodLoadApp
     val viewModel: SettingsViewModel = viewModel(
-        factory = SettingsViewModel.Factory(app.container.tokenManager),
+        factory = SettingsViewModel.Factory(
+            app.container.tokenManager,
+            app.container.userApiService,
+        ),
     )
+
+    val showDeleteDialog by viewModel.showDeleteDialog.collectAsState()
+    val isDeleting by viewModel.isDeleting.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.events.collect { event ->
             when (event) {
                 is SettingsEvent.LoggedOut -> onLogout()
+                is SettingsEvent.AccountDeleted -> onLogout()
+                is SettingsEvent.Error -> { /* TODO: Snackbar */ }
             }
         }
+    }
+
+    if (showDeleteDialog) {
+        AlertDialog(
+            onDismissRequest = { viewModel.dismissDeleteDialog() },
+            title = { Text("계정 삭제") },
+            text = {
+                Text("계정을 삭제하면 모든 데이터가 영구적으로 삭제됩니다. 이 작업은 되돌릴 수 없습니다.")
+            },
+            confirmButton = {
+                TextButton(
+                    onClick = { viewModel.deleteAccount() },
+                    colors = ButtonDefaults.textButtonColors(
+                        contentColor = MaterialTheme.colorScheme.error,
+                    ),
+                ) {
+                    Text("삭제")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { viewModel.dismissDeleteDialog() }) {
+                    Text("취소")
+                }
+            },
+        )
     }
 
     Scaffold(
@@ -109,6 +146,17 @@ fun SettingsScreen(
             )
 
             Spacer(Modifier.weight(1f))
+
+            TextButton(
+                onClick = { viewModel.showDeleteConfirmation() },
+                modifier = Modifier.fillMaxWidth(),
+                enabled = !isDeleting,
+                colors = ButtonDefaults.textButtonColors(
+                    contentColor = MaterialTheme.colorScheme.error,
+                ),
+            ) {
+                Text(if (isDeleting) "삭제 중..." else "계정 삭제")
+            }
 
             OutlinedButton(
                 onClick = { viewModel.logout() },

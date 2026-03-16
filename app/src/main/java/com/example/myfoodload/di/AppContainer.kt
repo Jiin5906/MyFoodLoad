@@ -14,6 +14,7 @@ import com.example.myfoodload.data.local.db.RecommendationDatabase
 import com.example.myfoodload.data.remote.RecommendationApiService
 import com.example.myfoodload.data.remote.RestaurantApiService
 import com.example.myfoodload.data.remote.TokenAuthenticator
+import com.example.myfoodload.data.remote.UserApiService
 import com.example.myfoodload.data.remote.VisitApiService
 import com.example.myfoodload.data.remote.YouTubeIngestionApiService
 import com.example.myfoodload.BuildConfig
@@ -91,4 +92,6 @@ class AppContainer(context: Context) {
         retrofit.create(FavoritesApiService::class.java)
     val visitApiService: VisitApiService =
         retrofit.create(VisitApiService::class.java)
+    val userApiService: UserApiService =
+        retrofit.create(UserApiService::class.java)
 }

@@ -70,6 +70,10 @@ class AuthService(
         )
     }
 
+    fun deleteAccount(userId: Long) {
+        userRepository.deleteById(userId)
+    }
+
     fun refreshToken(refreshToken: String): RefreshTokenResponse {
         if (!jwtTokenProvider.validateToken(refreshToken)) {
             throw IllegalArgumentException("만료되었거나 유효하지 않은 Refresh Token입니다")

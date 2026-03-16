@@ -30,6 +30,8 @@ class SecurityConfig(
                     .permitAll()
                     .requestMatchers("/api/health")
                     .permitAll()
+                    .requestMatchers("/account-delete.html")
+                    .permitAll()
                     .requestMatchers("/api/**")
                     .authenticated()
                     .anyRequest()
