@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "103931316755",
+    "project_id": "myfoodload-fb259",
+    "storage_bucket": "myfoodload-fb259.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103931316755:android:c58694efeb99141ed8cde6",
+        "android_client_info": {
+          "package_name": "com.example.myfoodload"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuluYkh-8B5sQD3WzlWOvx-c0nwzKfipw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:103931316755:android:85b334c28ee56d23d8cde6",
+        "android_client_info": {
+          "package_name": "com.myfoodload.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuluYkh-8B5sQD3WzlWOvx-c0nwzKfipw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
