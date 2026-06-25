@@ -49,7 +49,7 @@ class VideoIngestionService(
             val fetchedIds = videos.map { it.id }
 
             if (fetchedIds.isEmpty()) {
-                log.info("수집된 좋아요 영상 없음 — userId=$userId")
+                log.warn("YouTube API에서 좋아요 영상 0개 반환 — userId=$userId (쿨다운 미설정, 재시도 가능)")
                 return@withContext IngestionResultDto()
             }
 

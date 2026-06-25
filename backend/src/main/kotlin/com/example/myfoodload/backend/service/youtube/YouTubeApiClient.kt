@@ -183,7 +183,10 @@ class YouTubeApiClient(
                     status.value(),
                 )
             }
-            null
+            throw YouTubeFetchException(
+                "YouTube API HTTP 오류 (status=$status): $body",
+                e,
+            )
         } catch (e: YouTubeAuthException) {
             throw e
         } catch (e: Exception) {
